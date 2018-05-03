@@ -9,9 +9,16 @@
         <constructor-arg value="1"/>
         <constructor-arg value="John"/>
     </bean>
+    <bean id="dateFormat" class="java.text.DateFormat"
+          factory-method="getDateTimeInstance"/>
+    <bean id="event" class="Event" scope="prototype">
+        <constructor-arg>
+            <bean class="java.util.Date"/>
+        </constructor-arg>
+        <constructor-arg ref="dateFormat"/>
+    </bean>
     <bean id="eventLogger" class="ConsoleEventLogger">
     </bean>
-
     <bean id="app" class="App">
         <constructor-arg ref="client"/>
         <constructor-arg ref="eventLogger"/>

@@ -1,6 +1,8 @@
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.util.Date;
+
 public class App {
     private Client client;
     private ConsoleEventLogger eventLogger;
@@ -11,7 +13,10 @@ public class App {
     }
 
     public void logEvent(String msg) {
-        eventLogger.logEvent(msg.replaceAll(String.valueOf(client.getId()), client.getFullName()));
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+        Event event = (Event) context.getBean("event");
+        event.setMsg(msg);
+        eventLogger.logEvent(event);
     }
 
     public static void main(String[] args) {
@@ -19,8 +24,12 @@ public class App {
         ApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
         App app = (App) ctx.getBean("app");
 
-
         app.logEvent("some event for user 1");
+        try {
+            Thread.sleep(1100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         app.logEvent("some event for 2");
     }
 }
