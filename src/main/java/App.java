@@ -1,13 +1,14 @@
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.Date;
 
 public class App {
     private Client client;
-    private ConsoleEventLogger eventLogger;
+    private EventLogger eventLogger;
 
-    public App(Client client, ConsoleEventLogger eventLogger) {
+    public App(Client client, EventLogger eventLogger) {
         this.client = client;
         this.eventLogger = eventLogger;
     }
@@ -21,15 +22,15 @@ public class App {
 
     public static void main(String[] args) {
 
-        ApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
+        ConfigurableApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
         App app = (App) ctx.getBean("app");
 
         app.logEvent("some event for user 1");
-        try {
-            Thread.sleep(1100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         app.logEvent("some event for 2");
+        app.logEvent("some event for 3");
+        app.logEvent("some event for 4");
+        app.logEvent("some event for 5");
+
+        ctx.close();
     }
 }
