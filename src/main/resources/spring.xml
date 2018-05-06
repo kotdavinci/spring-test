@@ -8,9 +8,10 @@
     <import resource="loggers.xml"/>
 
     <!-- standart consrtructor with two args -->
-    <bean id="client" class="Client">
+    <bean id="client" class="beans.Client">
         <constructor-arg value="1"/>
         <constructor-arg value="John"/>
+        <property name="greeting" value="Hello there!"/>
     </bean>
 
     <!--construct object with static method -->
@@ -18,7 +19,7 @@
           factory-method="getDateTimeInstance"/>
 
     <!-- one arg is inner bean, scope field -->
-    <bean id="event" class="Event" scope="prototype">
+    <bean id="event" class="beans.Event" scope="prototype">
         <constructor-arg>
             <bean class="java.util.Date"/>
         </constructor-arg>
@@ -28,7 +29,15 @@
     <!-- args is refs to another bean-->
     <bean id="app" class="App">
         <constructor-arg ref="client"/>
-        <constructor-arg ref="cacheFileEventLogger"/>
+        <constructor-arg>
+            <map>
+                <entry value-ref="cacheFileEventLogger">
+                    <key><null/></key>
+                </entry>
+                <entry key="INFO" value-ref="consoleEventLogger"/>
+                <entry key="ERROR" value-ref="combinedEventLogger"/>
+            </map>
+        </constructor-arg>
     </bean>
 
 </beans>

@@ -1,3 +1,5 @@
+package beans;
+
 import java.text.DateFormat;
 import java.util.Date;
 
@@ -22,6 +24,6 @@ public class Event {
 
     @Override
     public String toString() {
-        return String.format("%s %s %s\n", id, df.format(date), msg);
+        return String.format("%s %s %s", id, df.format(date), msg);
     }
 }

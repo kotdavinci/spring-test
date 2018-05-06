@@ -1,3 +1,8 @@
+package loggers;
+
+import beans.Event;
+import beans.EventType;
+
 import java.util.ArrayList;
 import java.util.List;
 
