@@ -5,6 +5,8 @@
  		http://www.springframework.org/schema/beans
  		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
 
+    <import resource="loggers.xml"/>
+
     <!-- standart consrtructor with two args -->
     <bean id="client" class="Client">
         <constructor-arg value="1"/>
@@ -23,26 +25,10 @@
         <constructor-arg ref="dateFormat"/>
     </bean>
 
-    <!-- simple bean -->
-    <bean id="eventLogger" class="ConsoleEventLogger"/>
-
     <!-- args is refs to another bean-->
     <bean id="app" class="App">
         <constructor-arg ref="client"/>
         <constructor-arg ref="cacheFileEventLogger"/>
-    </bean>
-
-    <!-- invoke initialization method-->
-    <bean id="fileEventLogger" class="FileEventLogger"
-          init-method="init">
-        <constructor-arg value="/home/kotdavinci/test/filename.txt"/>
-    </bean>
-
-    <bean id="cacheFileEventLogger" class="CacheFileEventLogger"
-          init-method="init"
-          destroy-method="destroy">
-        <constructor-arg value="/home/kotdavinci/test/filename.txt"/>
-        <constructor-arg value="3"/>
     </bean>
 
 </beans>
